@@ -32,6 +32,8 @@ class Rule(KLCRule):
                 rect = filled_rects[0]
                 x = (int(rect['startx']) + int(rect['endx'])) // 2
                 y = (int(rect['starty']) + int(rect['endy'])) // 2
+                y_min = int(min([rect['starty'], rect['endy']]))
+                y_max = int(max([rect['starty'], rect['endy']]))
             else:
                 pins = [pin for pin in self.component.pins
                         if (not units_locked) or (int(pin['unit']) == unit)]
@@ -52,14 +54,15 @@ class Rule(KLCRule):
                 y = (y_min + y_max) / 2
 
             # Right on the middle!
-            if x == 0 and y == 0:
+            # JILM: check center for x-axis and symbol bounds for y-axis
+            if x == 0 and y_min <= 0 and 0 <= y_max:
                 continue
-            elif math.fabs(x) <= 50 and math.fabs(y) <= 50:
+            elif math.fabs(x) <= 50:
                 self.info("Symbol unit {unit} slightly off-center".format(unit=unit))
-                self.info("  Center calculated @ ({x}, {y})".format(x=x, y=y))
+                self.info("  x-Center calculated {x}; y-Axis symbol bounds ({y_min}, {y_max}})".format(x=x, y_min=y_min, y_max=y_max))
             else:
                 self.warning("Symbol unit {unit} not centered on origin".format(unit=unit))
-                self.warningExtra("Center calculated @ ({x}, {y})".format(x=x, y=y))
+                self.warningExtra("x-Center calculated {x}; y-Axis symbol bounds ({y_min}, {y_max}})".format(x=x, y_min=y_min, y_max=y_max))
 
         return False
 
