@@ -7,7 +7,7 @@ import re
 class Rule(KLCRule):
 
     # Power Input Pins should be 'W'
-    POWER_INPUTS = ['^[ad]*g(rou)*nd$', '^[ad]*v(aa|cc|dd|ss|bat|in)$']
+    POWER_INPUTS = ['^[ad]*g(rou)*nda?$', '^[ad]*v(aa|cc|dd|ss|bat|in)$']
 
     # Power Output Pins should be 'w'
     POWER_OUTPUTS = ['^vout$']
