@@ -117,6 +117,19 @@ class Rule(KLCRule):
 
         return len(self.inversion_errors) > 0
 
+    def checkUnspecified(self, pins):
+
+        self.unspecified_errors = []
+
+        for pin in pins:
+            if pin['electrical_type'] == 'U':
+                if len(self.unspecified_errors) == 0:
+                    self.error("Pins should not have unspecified electrical type")
+                self.unspecified_errors.append(pin)
+                self.errorExtra("{pin} : electrical type unspecified".format(pin=pinString(pin)))
+
+        return len(self.unspecified_errors) > 0
+
     def check(self):
         """
         Proceeds the checking of the rule.
@@ -130,7 +143,8 @@ class Rule(KLCRule):
         return any([
             self.checkPowerPins(pins),
             self.checkDoubleInversions(pins),
-            self.checkSuggestions(pins)
+            self.checkSuggestions(pins),
+            self.checkUnspecified(pins)
             ])
 
     def fix(self):
