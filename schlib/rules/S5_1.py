@@ -60,20 +60,25 @@ class Rule(KLCRule):
 
                     # Check that the footprint exists!
                     if not fail:
-                        if self.footprints_dir and os.path.exists(self.footprints_dir) and os.path.isdir(self.footprints_dir):
+                        found_footprint = False
+                        for footprint_dir in self.footprints_dir:
+                            if os.path.exists(footprint_dir) and os.path.isdir(footprint_dir):
 
-                            fp_libs = [x.replace('.pretty', '') for x in os.listdir(self.footprints_dir) if x.endswith('.pretty')]
+                                fp_libs = [x.replace('.pretty', '') for x in os.listdir(footprint_dir) if x.endswith('.pretty')]
 
-                            if fp_dir not in fp_libs:
-                                self.error('Specified footprint library does not exist')
-                                self.errorExtra("Footprint library '{l}' was not found".format(l=fp_dir))
-                            else:
-                                pretty_dir = os.path.join(self.footprints_dir, fp_dir + ".pretty")
-                                fp_file = os.path.join(pretty_dir, fp_path + '.kicad_mod')
+                                if fp_dir in fp_libs:
+                                    pretty_dir = os.path.join(footprint_dir, fp_dir + ".pretty")
+                                    fp_file = os.path.join(pretty_dir, fp_path + '.kicad_mod')
 
-                                if not os.path.exists(fp_file):
-                                    self.error("Specified footprint does not exist")
-                                    self.errorExtra("Footprint file {l}:{f} was not found".format(l=fp_dir, f=fp_path))
+                                    if not os.path.exists(fp_file):
+                                        self.error("Specified footprint does not exist")
+                                        self.errorExtra("Footprint file {l}:{f} was not found".format(l=fp_dir, f=fp_path))
+
+                                    found_footprint = True
+
+                        if not found_footprint:
+                            self.error('Specified footprint library does not exist')
+                            self.errorExtra("Footprint library '{l}' was not found".format(l=fp_dir))
 
                     for filt in filters:
                         match1 = fnmatch.fnmatch(fp_path, filt)

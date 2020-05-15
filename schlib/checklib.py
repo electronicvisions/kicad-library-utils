@@ -125,9 +125,9 @@ for libfile in libfiles:
             rule = rule(component)
 
             if args.footprints:
-                rule.footprints_dir = args.footprints
+                rule.footprints_dir = args.footprints.split(",")
             else:
-                rule.footprints_dir = None
+                rule.footprints_dir = []
 
             if verbosity > 2:
                 printer.white("checking rule" + rule.name)
