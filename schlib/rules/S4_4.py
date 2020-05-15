@@ -61,7 +61,8 @@ class Rule(KLCRule):
                 inSpecialStack = pin['num'] in self.component.padInSpecialPowerStack
                 Rule43NotExecuted = False
 
-            if self.test(name.lower(), self.POWER_INPUTS) and (not etype.lower() == 'w') and (not inSpecialStack):
+            # deactivate power in/out check for connectors (identified via component reference 'J')
+            if self.test(name.lower(), self.POWER_INPUTS) and (not etype.lower() == 'w') and (not inSpecialStack) and (self.component.reference != 'J'):
                 if len(self.power_errors) == 0:
                     self.error("Power pins should be of type POWER INPUT or POWER OUTPUT")
                     if Rule43NotExecuted:
