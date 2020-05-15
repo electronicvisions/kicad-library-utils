@@ -59,10 +59,10 @@ class Rule(KLCRule):
                 continue
             elif math.fabs(x) <= 50:
                 self.info("Symbol unit {unit} slightly off-center".format(unit=unit))
-                self.info("  x-Center calculated {x}; y-Axis symbol bounds ({y_min}, {y_max}})".format(x=x, y_min=y_min, y_max=y_max))
+                self.info("  x-Center calculated {x}; y-Axis symbol bounds ({y_min}, {y_max})".format(x=x, y_min=y_min, y_max=y_max))
             else:
                 self.warning("Symbol unit {unit} not centered on origin".format(unit=unit))
-                self.warningExtra("x-Center calculated {x}; y-Axis symbol bounds ({y_min}, {y_max}})".format(x=x, y_min=y_min, y_max=y_max))
+                self.warningExtra("x-Center calculated {x}; y-Axis symbol bounds ({y_min}, {y_max})".format(x=x, y_min=y_min, y_max=y_max))
 
         return False
 
