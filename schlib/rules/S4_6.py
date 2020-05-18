@@ -44,7 +44,8 @@ class Rule(KLCRule):
                     self.type_errors.append(pin)
 
                 # NC pins should be invisible
-                if visible:
+                # except for connectors
+                if visible and (self.component.reference != 'J'):
                     self.invisible_errors.append(pin)
 
         if len(self.type_errors) > 0:
