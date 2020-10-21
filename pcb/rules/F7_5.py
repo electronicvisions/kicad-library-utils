@@ -27,7 +27,7 @@ class Rule(KLCRule):
 
         err = False
 
-        MIN_RING = 0.15
+        MIN_RING = 0.1
 
         # Circular pad
         if drill_x == drill_y and pad_x == pad_y:
