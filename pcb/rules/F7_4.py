@@ -21,7 +21,9 @@ class Rule(KLCRule):
     def __init__(self, module, args):
         super(Rule, self).__init__(module, args, 'Pad requirements for THT footprints')
 
-        self.required_layers = ["*.Cu","*.Mask"]
+        self.required_layers = ["*.Cu"]
+        if module.attribute != "virtual":
+            self.required_layers.append("*.Mask")
 
 
 
