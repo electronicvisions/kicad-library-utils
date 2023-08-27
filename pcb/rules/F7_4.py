@@ -139,6 +139,8 @@ class Rule(KLCRule):
         """
         module = self.module
 
+        if module.attribute == "virtual":
+            return False
         return any([self.checkPads(module.pads)])
 
     def fix(self):
