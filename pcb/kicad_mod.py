@@ -97,6 +97,12 @@ class KicadMod(object):
 
         # user text
         self.userText = self._getText('user')
+        self.ruleExclude = list()
+
+        for text in self.userText:
+            if str(text['user']).startswith('RuleExclude:'):
+                for rule in str(text['user']).split(':')[1].split(','):
+                    self.ruleExclude.append(rule)
 
         # lines
         self.lines = self._getLines()

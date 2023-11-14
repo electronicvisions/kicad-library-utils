@@ -24,6 +24,9 @@ class Rule(KLCRule):
             # Ignore non-smd parts
             return False
 
+        if 'F6_2' in module.ruleExclude:
+            return False
+
         center = module.padMiddlePosition()
 
         err = False
