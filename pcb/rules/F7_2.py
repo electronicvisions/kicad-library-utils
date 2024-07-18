@@ -28,6 +28,9 @@ class Rule(KLCRule):
 
         num = ''
 
+        if 'F7_2' in module.ruleExclude:
+            return False
+
         # check if module is through-hole
         if module.attribute == 'pth':
 
